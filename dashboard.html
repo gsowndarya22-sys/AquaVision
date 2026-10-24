@@ -1170,8 +1170,9 @@
                 }
 
 
-                const field =
-                    fields[0];
+                const field = [...fields].sort(
+                    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+                )[0];
 
 
                 container.innerHTML = `
