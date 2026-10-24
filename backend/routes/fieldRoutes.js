@@ -1,5 +1,5 @@
 const express = require("express");
-const Field = require("../models/Field");
+const Field = require("../models/field");
 
 const router = express.Router();
 
