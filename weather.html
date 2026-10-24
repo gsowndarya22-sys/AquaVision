@@ -1,0 +1,567 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Weather Intelligence | AquaVision</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+    <nav class="navbar">
+
+        <div class="logo">💧 AquaVision</div>
+
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="irrigation.html">Smart Irrigation</a>
+            <a href="weather.html">Weather</a>
+            <a href="about.html">About</a>
+        </div>
+
+    </nav>
+</header>
+
+
+<main>
+
+<section class="page-section">
+
+    <div class="section-heading">
+
+        <p class="small-title">WEATHER INTELLIGENCE</p>
+
+        <h1>Rayalaseema Weather Dashboard</h1>
+
+        <p>
+            Check current weather conditions and understand how they
+            may influence irrigation decisions.
+        </p>
+
+    </div>
+
+
+    <!-- LOCATION SELECTION -->
+
+    <div class="weather-controls">
+
+        <label for="weatherLocation">
+            Select Rayalaseema Location
+        </label>
+
+        <select id="weatherLocation">
+
+            <option value="Anantapur">Anantapur</option>
+
+            <option value="Sri Sathya Sai">
+                Sri Sathya Sai
+            </option>
+
+            <option value="Kurnool">
+                Kurnool
+            </option>
+
+            <option value="Nandyal">
+                Nandyal
+            </option>
+
+            <option value="YSR Kadapa">
+                YSR Kadapa
+            </option>
+
+            <option value="Annamayya">
+                Annamayya
+            </option>
+
+            <option value="Chittoor">
+                Chittoor
+            </option>
+
+            <option value="Tirupati">
+                Tirupati
+            </option>
+
+        </select>
+
+
+        <button
+            id="weatherButton"
+            class="calculate-btn"
+            type="button"
+        >
+            Check Weather
+        </button>
+
+    </div>
+
+
+    <!-- WEATHER RESULT -->
+
+    <div class="weather-result">
+
+        <div class="weather-location">
+
+            <span>📍 Location</span>
+
+            <h2 id="locationName">
+                Anantapur
+            </h2>
+
+            <p id="condition">
+                Loading weather...
+            </p>
+
+        </div>
+
+
+        <!-- WEATHER CARDS -->
+
+        <div class="weather-cards">
+
+
+            <!-- TEMPERATURE -->
+
+            <div class="weather-card">
+
+                <div class="weather-icon">
+                    🌡️
+                </div>
+
+                <p>
+                    Temperature
+                </p>
+
+                <h2 id="temperature">
+                    -- °C
+                </h2>
+
+            </div>
+
+
+            <!-- HUMIDITY -->
+
+            <div class="weather-card">
+
+                <div class="weather-icon">
+                    💧
+                </div>
+
+                <p>
+                    Humidity
+                </p>
+
+                <h2 id="humidity">
+                    -- %
+                </h2>
+
+            </div>
+
+
+            <!-- RAINFALL -->
+
+            <div class="weather-card">
+
+                <div class="weather-icon">
+                    🌧️
+                </div>
+
+                <p>
+                    Rainfall
+                </p>
+
+                <h2 id="rainfall">
+                    -- mm
+                </h2>
+
+            </div>
+
+
+            <!-- WIND -->
+
+            <div class="weather-card">
+
+                <div class="weather-icon">
+                    💨
+                </div>
+
+                <p>
+                    Wind Speed
+                </p>
+
+                <h2 id="wind">
+                    -- km/h
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <!-- IRRIGATION INSIGHT -->
+
+        <div class="weather-insight">
+
+            <div class="insight-icon">
+                💡
+            </div>
+
+            <div>
+
+                <h3>
+                    Weather-Based Irrigation Insight
+                </h3>
+
+                <p id="irrigationInsight">
+                    Check the weather to get an irrigation insight.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <p
+            id="weatherStatus"
+            style="
+                text-align:center;
+                margin-top:15px;
+                font-size:14px;
+            "
+        >
+        </p>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    <h3>
+        💧 AquaVision
+    </h3>
+
+    <p>
+        Weather-Based Smart Irrigation Management System for Rayalaseema
+    </p>
+
+    <p class="copyright">
+        © 2026 AquaVision | CSP Project
+    </p>
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   RAYALASEEMA LOCATION COORDINATES
+   ========================================================= */
+
+const locations = {
+
+    "Anantapur": {
+        latitude: 14.6819,
+        longitude: 77.6006
+    },
+
+    "Sri Sathya Sai": {
+        latitude: 14.1652,
+        longitude: 77.8117
+    },
+
+    "Kurnool": {
+        latitude: 15.8281,
+        longitude: 78.0373
+    },
+
+    "Nandyal": {
+        latitude: 15.4786,
+        longitude: 78.4831
+    },
+
+    "YSR Kadapa": {
+        latitude: 14.4674,
+        longitude: 78.8241
+    },
+
+    "Annamayya": {
+        latitude: 14.0570,
+        longitude: 78.7510
+    },
+
+    "Chittoor": {
+        latitude: 13.2172,
+        longitude: 79.1003
+    },
+
+    "Tirupati": {
+        latitude: 13.6288,
+        longitude: 79.4192
+    }
+
+};
+
+
+/* =========================================================
+   WEATHER CODE → WEATHER DESCRIPTION
+   ========================================================= */
+
+function getWeatherCondition(code) {
+
+    if (code === 0) {
+        return "☀️ Clear Sky";
+    }
+
+    if (code === 1 || code === 2) {
+        return "🌤️ Partly Cloudy";
+    }
+
+    if (code === 3) {
+        return "☁️ Overcast";
+    }
+
+    if (code === 45 || code === 48) {
+        return "🌫️ Foggy";
+    }
+
+    if (
+        code === 51 ||
+        code === 53 ||
+        code === 55
+    ) {
+        return "🌦️ Drizzle";
+    }
+
+    if (
+        code === 61 ||
+        code === 63 ||
+        code === 65
+    ) {
+        return "🌧️ Rain";
+    }
+
+    if (
+        code === 80 ||
+        code === 81 ||
+        code === 82
+    ) {
+        return "🌧️ Rain Showers";
+    }
+
+    if (
+        code === 95 ||
+        code === 96 ||
+        code === 99
+    ) {
+        return "⛈️ Thunderstorm";
+    }
+
+    return "🌤️ Variable Weather";
+}
+
+
+/* =========================================================
+   IRRIGATION RECOMMENDATION
+   ========================================================= */
+
+function getIrrigationInsight(rainfall) {
+
+    if (rainfall >= 8) {
+
+        return "🌧️ Significant rainfall is indicated. Consider postponing irrigation and reassessing soil moisture after rainfall.";
+
+    }
+
+    else if (rainfall >= 3) {
+
+        return "🌦️ Some rainfall is indicated. Monitor soil moisture before applying additional irrigation.";
+
+    }
+
+    else {
+
+        return "☀️ Little or no rainfall is indicated. Check soil moisture before deciding whether irrigation is required.";
+
+    }
+
+}
+
+
+/* =========================================================
+   FETCH LIVE WEATHER
+   ========================================================= */
+
+async function showWeather() {
+
+    const location =
+        document.getElementById("weatherLocation").value;
+
+    const locationData =
+        locations[location];
+
+
+    /* Update location name */
+
+    document.getElementById("locationName")
+        .textContent = location;
+
+
+    /* Show loading */
+
+    document.getElementById("condition")
+        .textContent = "Loading weather...";
+
+
+    document.getElementById("weatherStatus")
+        .textContent = "Fetching current weather data...";
+
+
+    try {
+
+        /*
+        Open-Meteo current weather API
+        */
+
+        const url =
+            `https://api.open-meteo.com/v1/forecast` +
+            `?latitude=${locationData.latitude}` +
+            `&longitude=${locationData.longitude}` +
+            `&current=temperature_2m,relative_humidity_2m,precipitation,wind_speed_10m,weather_code` +
+            `&temperature_unit=celsius` +
+            `&wind_speed_unit=kmh` +
+            `&precipitation_unit=mm`;
+
+
+        const response =
+            await fetch(url);
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Weather API request failed"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        const current =
+            data.current;
+
+
+        /* =================================================
+           DISPLAY WEATHER
+           ================================================= */
+
+
+        document.getElementById("temperature")
+            .textContent =
+            `${Math.round(current.temperature_2m)}°C`;
+
+
+        document.getElementById("humidity")
+            .textContent =
+            `${Math.round(current.relative_humidity_2m)}%`;
+
+
+        document.getElementById("rainfall")
+            .textContent =
+            `${Number(current.precipitation).toFixed(1)} mm`;
+
+
+        document.getElementById("wind")
+            .textContent =
+            `${Math.round(current.wind_speed_10m)} km/h`;
+
+
+        /* Weather condition */
+
+        document.getElementById("condition")
+            .textContent =
+            getWeatherCondition(
+                current.weather_code
+            );
+
+
+        /* Irrigation insight */
+
+        document.getElementById("irrigationInsight")
+            .textContent =
+            getIrrigationInsight(
+                Number(current.precipitation)
+            );
+
+
+        /* Status */
+
+        document.getElementById("weatherStatus")
+            .textContent =
+            "✅ Current weather data loaded successfully.";
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "Weather error:",
+            error
+        );
+
+
+        document.getElementById("condition")
+            .textContent =
+            "Unable to load weather";
+
+
+        document.getElementById("irrigationInsight")
+            .textContent =
+            "⚠️ Weather data could not be retrieved. Please check your internet connection and try again.";
+
+
+        document.getElementById("weatherStatus")
+            .textContent =
+            "❌ Could not fetch weather data.";
+
+    }
+
+}
+
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+document
+    .getElementById("weatherButton")
+    .addEventListener(
+        "click",
+        showWeather
+    );
+
+
+/* =========================================================
+   LOAD WEATHER WHEN PAGE OPENS
+   ========================================================= */
+
+showWeather();
+
+</script>
+
+</body>
+</html>
+

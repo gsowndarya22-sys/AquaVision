@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AquaVision - Smart Irrigation</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+
+        body {
+
+            background: #f4f9fb;
+
+            color: #1f2937;
+
+            min-height: 100vh;
+
+        }
+
+
+        /* ===============================
+           HEADER
+        =============================== */
+
+        header {
+
+            background: linear-gradient(
+                135deg,
+                #087f8c,
+                #00a6a6
+            );
+
+            color: white;
+
+            padding: 20px 40px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.1);
+
+        }
+
+
+        .logo {
+
+            font-size: 25px;
+
+            font-weight: bold;
+
+        }
+
+
+        .back-btn {
+
+            text-decoration: none;
+
+            color: white;
+
+            background: rgba(255,255,255,0.15);
+
+            padding: 10px 18px;
+
+            border-radius: 8px;
+
+            transition: 0.3s;
+
+        }
+
+
+        .back-btn:hover {
+
+            background: rgba(255,255,255,0.25);
+
+        }
+
+
+        /* ===============================
+           MAIN CONTAINER
+        =============================== */
+
+        .container {
+
+            width: 90%;
+
+            max-width: 1000px;
+
+            margin: 40px auto;
+
+        }
+
+
+        .page-title {
+
+            text-align: center;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .page-title h1 {
+
+            color: #087f8c;
+
+            margin-bottom: 10px;
+
+            font-size: 32px;
+
+        }
+
+
+        .page-title p {
+
+            color: #6b7280;
+
+            font-size: 16px;
+
+        }
+
+
+        /* ===============================
+           IRRIGATION CARD
+        =============================== */
+
+        .irrigation-card {
+
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 8px 30px rgba(0,0,0,0.08);
+
+        }
+
+
+        .irrigation-card h2 {
+
+            color: #087f8c;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        /* ===============================
+           FORM
+        =============================== */
+
+        .irrigation-form {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 18px;
+
+        }
+
+
+        .irrigation-form label {
+
+            font-weight: bold;
+
+            color: #374151;
+
+        }
+
+
+        .irrigation-form input,
+        .irrigation-form select {
+
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            background: white;
+
+        }
+
+
+        .irrigation-form input:focus,
+        .irrigation-form select:focus {
+
+            outline: none;
+
+            border-color: #087f8c;
+
+            box-shadow:
+                0 0 0 2px rgba(8,127,140,0.1);
+
+        }
+
+
+        .irrigation-form input[readonly] {
+
+            background: #f3f7f8;
+
+            color: #374151;
+
+        }
+
+
+        /* ===============================
+           BUTTON
+        =============================== */
+
+        .calculate-btn {
+
+            grid-column: 1 / -1;
+
+            padding: 15px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background: linear-gradient(
+                135deg,
+                #087f8c,
+                #00a6a6
+            );
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+
+        }
+
+
+        .calculate-btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 6px 15px rgba(8,127,140,0.25);
+
+        }
+
+
+        /* ===============================
+           RESULT
+        =============================== */
+
+        .result-box {
+
+            grid-column: 1 / -1;
+
+            margin-top: 20px;
+
+            padding: 25px;
+
+            border-radius: 14px;
+
+            background: #f8fbfc;
+
+            border: 1px solid #dcecef;
+
+            line-height: 1.7;
+
+        }
+
+
+        .result-box:empty {
+
+            display: none;
+
+        }
+
+
+        .result-box h2 {
+
+            color: #087f8c;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .result-box h3 {
+
+            color: #087f8c;
+
+            margin-top: 18px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .result-box hr {
+
+            border: none;
+
+            border-top: 1px solid #dcecef;
+
+            margin: 15px 0;
+
+        }
+
+
+        .result-box .note {
+
+            margin-top: 20px;
+
+            padding: 12px;
+
+            background: #fff8e1;
+
+            border-radius: 8px;
+
+            color: #6b5b00;
+
+            font-size: 13px;
+
+        }
+
+
+        /* ===============================
+           MOBILE
+        =============================== */
+
+        @media (max-width: 700px) {
+
+            header {
+
+                padding: 18px 20px;
+
+            }
+
+
+            .container {
+
+                width: 94%;
+
+                margin: 25px auto;
+
+            }
+
+
+            .irrigation-card {
+
+                padding: 22px;
+
+            }
+
+
+            .irrigation-form {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .calculate-btn {
+
+                grid-column: 1;
+
+            }
+
+
+            .result-box {
+
+                grid-column: 1;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ===============================
+     HEADER
+=============================== -->
+
+<header>
+
+    <div class="logo">
+        💧 AquaVision
+    </div>
+
+    <a href="dashboard.html"
+       class="back-btn">
+        ← Dashboard
+    </a>
+
+</header>
+
+
+
+<!-- ===============================
+     MAIN
+=============================== -->
+
+<div class="container">
+
+
+    <div class="page-title">
+
+        <h1>
+            Smart Irrigation
+        </h1>
+
+        <p>
+            Make irrigation decisions using
+            field conditions and soil moisture.
+        </p>
+
+    </div>
+
+
+
+    <section class="irrigation-card">
+
+        <h2>
+            💧 Irrigation Recommendation
+        </h2>
+
+
+
+        <!-- ===============================
+             FORM
+        =============================== -->
+
+        <div class="irrigation-form">
+
+
+            <!-- SELECT FIELD -->
+
+            <label for="fieldSelect">
+                🌱 Select Your Field
+            </label>
+
+            <select id="fieldSelect">
+
+                <option value="">
+                    Loading your fields...
+                </option>
+
+            </select>
+
+
+
+            <!-- LOCATION -->
+
+            <label for="location">
+                📍 Location
+            </label>
+
+            <input
+                type="text"
+                id="location"
+                readonly
+                placeholder="Select a field"
+            >
+
+
+
+            <!-- CROP -->
+
+            <label for="crop">
+                🌱 Crop
+            </label>
+
+            <input
+                type="text"
+                id="crop"
+                readonly
+                placeholder="Select a field"
+            >
+
+
+
+            <!-- FIELD AREA -->
+
+            <label for="area">
+                📐 Field Area (acres)
+            </label>
+
+            <input
+                type="number"
+                id="area"
+                readonly
+                placeholder="Select a field"
+            >
+
+
+
+            <!-- SOIL MOISTURE -->
+
+            <label for="moisture">
+                💧 Soil Moisture (%)
+            </label>
+
+            <input
+                type="number"
+                id="moisture"
+                placeholder="Example: 32"
+                min="0"
+                max="100"
+            >
+            <label for="rainfall">Rainfall Last 24 Hours (mm)</label>
+<input
+    type="number"
+    id="rainfall"
+    value="0"
+    readonly
+>
+<p id="weatherStatus" style="font-size: 14px; margin-top: 5px;">
+    Select a field to fetch current weather.
+</p>
+
+
+
+            <!-- IRRIGATION METHOD -->
+
+            <label for="method">
+                🚰 Irrigation Method
+            </label>
+
+            <input
+                type="text"
+                id="method"
+                readonly
+                placeholder="Select a field"
+            >
+
+
+
+            <!-- BUTTON -->
+
+            <button
+                id="calculateButton"
+                type="button"
+                class="calculate-btn"
+            >
+                Generate Recommendation
+            </button>
+
+
+
+            <!-- RESULT -->
+
+            <div
+                id="result"
+                class="result-box">
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</div>
+
+
+
+<script>
+
+const user = JSON.parse(localStorage.getItem("user"));
+
+if (!user) {
+    window.location.href = "login.html";
+}
+
+const farmerId = user.id;
+
+const fieldSelect = document.getElementById("fieldSelect");
+
+const locationInput = document.getElementById("location");
+const cropInput = document.getElementById("crop");
+const areaInput = document.getElementById("area");
+const methodInput = document.getElementById("method");
+const moistureInput = document.getElementById("moisture");
+
+const rainfallInput = document.getElementById("rainfall");
+const weatherStatus = document.getElementById("weatherStatus");
+
+const calculateButton =
+    document.getElementById("calculateButton");
+
+const result =
+    document.getElementById("result");
+
+
+/* =====================================================
+   RAYALASEEMA LOCATION COORDINATES
+   ===================================================== */
+
+const locations = {
+
+    "Anantapur": {
+        latitude: 14.6819,
+        longitude: 77.6006
+    },
+
+    "Ananthapur": {
+        latitude: 14.6819,
+        longitude: 77.6006
+    },
+
+    "ananthapur": {
+        latitude: 14.6819,
+        longitude: 77.6006
+    },
+
+    "Sri Sathya Sai": {
+        latitude: 14.1652,
+        longitude: 77.8117
+    },
+
+    "Kurnool": {
+        latitude: 15.8281,
+        longitude: 78.0373
+    },
+
+    "Nandyal": {
+        latitude: 15.4786,
+        longitude: 78.4831
+    },
+
+    "YSR Kadapa": {
+        latitude: 14.4674,
+        longitude: 78.8241
+    },
+
+    "Annamayya": {
+        latitude: 14.0570,
+        longitude: 78.7510
+    },
+
+    "Chittoor": {
+        latitude: 13.2172,
+        longitude: 79.1003
+    },
+
+    "Tirupati": {
+        latitude: 13.6288,
+        longitude: 79.4192
+    }
+
+};
+
+/* =====================================================
+   CROP WATER REQUIREMENT
+   Prototype values for AquaVision
+   ===================================================== */
+
+const waterPerAcre = {
+
+    groundnut: 2200,
+    cotton: 2600,
+    rice: 3500,
+    maize: 2400
+
+};
+
+
+/* =====================================================
+   LOAD FARMER'S SAVED FIELDS
+   ===================================================== */
+
+async function loadFields() {
+
+    try {
+
+        const response = await fetch(
+            `http://localhost:5000/api/fields/${farmerId}`
+        );
+
+        const fields = await response.json();
+
+        fieldSelect.innerHTML =
+            '<option value="">Select your field</option>';
+
+
+        fields.forEach(field => {
+
+            const option =
+                document.createElement("option");
+
+            option.value = field._id;
+
+            option.textContent =
+                `${field.location} - ${field.crop} - ${field.fieldSize} acres`;
+
+            option.dataset.location =
+                field.location;
+
+            option.dataset.crop =
+                field.crop;
+
+            option.dataset.area =
+                field.fieldSize;
+
+            option.dataset.method =
+                field.irrigationMethod;
+
+            fieldSelect.appendChild(option);
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Field loading error:",
+            error
+        );
+
+        fieldSelect.innerHTML =
+            '<option value="">Could not load fields</option>';
+
+    }
+
+}
+
+
+/* =====================================================
+   GET LIVE RAINFALL
+   ===================================================== */
+
+async function getLiveRainfall(location) {
+
+    const locationKey = String(location)
+        .trim()
+        .toLowerCase();
+
+    // Find the location even if capitalization or extra spaces are different
+    const matchedLocation = Object.keys(locations).find(
+        key => key.trim().toLowerCase() === locationKey
+    );
+
+    const coordinates = matchedLocation
+        ? locations[matchedLocation]
+        : null;
+
+    if (!coordinates) {
+
+        weatherStatus.textContent =
+            `⚠️ Weather data is not available for ${location}.`;
+
+        rainfallInput.value = 0;
+
+        return 0;
+    }
+
+    weatherStatus.textContent =
+        "🌦️ Fetching rainfall data...";
+
+    try {
+
+        const url =
+            `https://api.open-meteo.com/v1/forecast` +
+            `?latitude=${coordinates.latitude}` +
+            `&longitude=${coordinates.longitude}` +
+            `&hourly=precipitation` +
+            `&daily=precipitation_sum,precipitation_probability_max` +
+            `&past_days=1` +
+            `&forecast_days=1` +
+            `&timezone=auto`;
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error("Weather API request failed");
+        }
+
+        const data = await response.json();
+
+        const hourlyTimes =
+            data.hourly?.time || [];
+
+        const hourlyRain =
+            data.hourly?.precipitation || [];
+
+        const now = new Date();
+
+        let rainfallLast24Hours = 0;
+
+        // Add rainfall from the previous 24 hours
+        for (let i = 0; i < hourlyTimes.length; i++) {
+
+            const hourTime =
+                new Date(hourlyTimes[i]);
+
+            const difference =
+                now - hourTime;
+
+            const hoursDifference =
+                difference / (1000 * 60 * 60);
+
+            if (
+                hoursDifference >= 0 &&
+                hoursDifference <= 24
+            ) {
+
+                rainfallLast24Hours +=
+                    Number(hourlyRain[i] || 0);
+            }
+        }
+
+        rainfallLast24Hours =
+            Number(rainfallLast24Hours.toFixed(1));
+
+        // Expected rainfall for today
+        const expectedRainfallToday =
+            Number(
+                data.daily?.precipitation_sum?.[0] || 0
+            );
+
+        // Maximum rainfall probability for today
+        const rainProbabilityToday =
+            Number(
+                data.daily?.precipitation_probability_max?.[0] || 0
+            );
+
+        // Show last 24-hour rainfall in the input
+        rainfallInput.value =
+            rainfallLast24Hours.toFixed(1);
+
+        weatherStatus.textContent =
+            `✅ Rainfall loaded for ${matchedLocation}: ` +
+            `${rainfallLast24Hours.toFixed(1)} mm in the last 24 hours. ` +
+            `Expected today: ${expectedRainfallToday.toFixed(1)} mm ` +
+            `(${rainProbabilityToday}% chance).`;
+
+        return rainfallLast24Hours;
+
+    } catch (error) {
+
+        console.error(
+            "Rainfall error:",
+            error
+        );
+
+        rainfallInput.value = 0;
+
+        weatherStatus.textContent =
+            "⚠️ Could not fetch live rainfall. Using 0 mm.";
+
+        return 0;
+    }
+}
+
+
+
+/* =====================================================
+   WHEN FARMER SELECTS A FIELD
+   ===================================================== */
+
+fieldSelect.addEventListener(
+    "change",
+    async function () {
+
+        const selectedOption =
+            fieldSelect.options[
+                fieldSelect.selectedIndex
+            ];
+
+
+        if (!fieldSelect.value) {
+
+            locationInput.value = "";
+            cropInput.value = "";
+            areaInput.value = "";
+            methodInput.value = "";
+
+            rainfallInput.value = 0;
+
+            weatherStatus.textContent =
+                "Select a field to fetch current weather.";
+
+            return;
+
+        }
+
+
+        /* Auto-fill field information */
+
+        locationInput.value =
+            selectedOption.dataset.location;
+
+        cropInput.value =
+            selectedOption.dataset.crop;
+
+        areaInput.value =
+            selectedOption.dataset.area;
+
+        methodInput.value =
+            selectedOption.dataset.method;
+
+
+        /* Get live rainfall */
+
+        await getLiveRainfall(
+            selectedOption.dataset.location
+        );
+
+    }
+);
+
+
+/* =====================================================
+   CALCULATE IRRIGATION
+   ===================================================== */
+
+calculateButton.addEventListener(
+    "click",
+    async function () {
+
+        const crop =
+            cropInput.value.toLowerCase();
+
+        const area =
+            Number(areaInput.value);
+
+        const moisture =
+            Number(moistureInput.value);
+
+        const rainfall =
+            Number(rainfallInput.value) || 0;
+
+
+        /* Validation */
+
+        if (!fieldSelect.value) {
+
+            result.innerHTML =
+                "⚠️ Please select a field first.";
+
+            return;
+
+        }
+
+
+        if (
+            moisture === "" ||
+            isNaN(moisture) ||
+            moisture < 0 ||
+            moisture > 100
+        ) {
+
+            result.innerHTML =
+                "⚠️ Please enter soil moisture between 0 and 100.";
+
+            return;
+
+        }
+
+
+        /* Water requirement */
+
+        const waterPerAcreValue =
+            waterPerAcre[crop] || 2200;
+
+
+        const estimatedWater =
+            area * waterPerAcreValue;
+
+
+        /* =================================================
+           WEATHER + SOIL MOISTURE DECISION
+           ================================================= */
+
+        let status;
+        let insight;
+
+
+        if (rainfall >= 8) {
+
+            status =
+                "Irrigation Postponed";
+
+
+            insight =
+                `🌧️ Rainfall in the last 24 hours is ${rainfall.toFixed(1)} mm. ` +
+                `Significant rainfall is indicated. ` +
+                `Postpone irrigation and reassess soil moisture after rainfall.`;
+
+        }
+
+        else if (moisture < 30) {
+
+            status =
+                "Irrigation Required";
+
+
+            insight =
+                `🔴 Soil moisture is ${moisture}%. ` +
+                `The field may require irrigation. ` +
+                `Rainfall in the last 24 hours is only ${rainfall.toFixed(1)} mm.`;
+
+        }
+
+        else if (
+            moisture >= 30 &&
+            moisture <= 50
+        ) {
+
+            status =
+                "Irrigation May Be Required";
+
+
+            insight =
+                `🟡 Soil moisture is ${moisture}%. ` +
+                `Monitor soil moisture before irrigation. ` +
+                `Rainfall in the last 24 hours: ${rainfall.toFixed(1)} mm.`;
+
+        }
+
+        else {
+
+            status =
+                "Irrigation Not Immediately Required";
+
+
+            insight =
+                `🟢 Soil moisture is ${moisture}%. ` +
+                `Irrigation is not immediately required. ` +
+                `Rainfall in the last 24 hours: ${rainfall.toFixed(1)} mm.`;
+
+        }
+
+
+        /* =================================================
+           DISPLAY RESULT
+           ================================================= */
+
+        result.innerHTML = `
+
+            <h3>💧 Irrigation Recommendation</h3>
+
+            <p>
+                <strong>Location:</strong>
+                ${locationInput.value}
+            </p>
+
+            <p>
+                <strong>Crop:</strong>
+                ${cropInput.value}
+            </p>
+
+            <p>
+                <strong>Field Area:</strong>
+                ${area} acres
+            </p>
+
+            <p>
+                <strong>Soil Moisture:</strong>
+                ${moisture}%
+            </p>
+
+            <p>
+                <strong>Rainfall Last 24 Hours:</strong>
+                ${rainfall.toFixed(1)} mm
+            </p>
+
+            <p>
+                <strong>Estimated Water Requirement:</strong>
+                ${estimatedWater.toFixed(0)} litres
+            </p>
+
+            <p>
+                <strong>Recommendation:</strong>
+                ${status}
+            </p>
+
+            <p>
+                ${insight}
+            </p>
+
+        `;
+
+
+        /* =================================================
+           SAVE IRRIGATION HISTORY
+           ================================================= */
+
+        try {
+
+            const response =
+                await fetch(
+                    "http://localhost:5000/api/irrigation",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            farmer: farmerId,
+
+                            field:
+                                fieldSelect.value,
+
+                            crop:
+                                cropInput.value,
+
+                            area:
+                                area,
+
+                            soilMoisture:
+                                moisture,
+
+                            rainfall:
+                                rainfall,
+
+                            waterRequired:
+                                estimatedWater,
+
+                            recommendation:
+                                status
+
+                        })
+
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (response.ok) {
+
+                result.innerHTML += `
+
+                    <p style="
+                        margin-top:15px;
+                        font-weight:bold;
+                    ">
+                        ✅ Irrigation record saved successfully.
+                    </p>
+
+                `;
+
+            }
+
+            else {
+
+                result.innerHTML += `
+
+                    <p style="
+                        margin-top:15px;
+                    ">
+                        ⚠️ Recommendation generated,
+                        but the record could not be saved.
+                    </p>
+
+                `;
+
+                console.error(data);
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Save irrigation error:",
+                error
+            );
+
+
+            result.innerHTML += `
+
+                <p style="
+                    margin-top:15px;
+                ">
+                    ⚠️ Recommendation generated,
+                    but the record could not be saved.
+                </p>
+
+            `;
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   LOAD FIELDS WHEN PAGE OPENS
+   ===================================================== */
+
+loadFields();
+
+
+</script>
+
+</body>
+
+</html>

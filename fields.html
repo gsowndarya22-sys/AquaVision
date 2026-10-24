@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaVision - My Fields</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f9fb;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 30px 20px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .topbar h1 {
+            color: #087f8c;
+            font-size: 30px;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            background: #087f8c;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+
+        .card h2 {
+            margin-bottom: 20px;
+            color: #087f8c;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .submit-btn {
+            margin-top: 20px;
+            padding: 13px 25px;
+            border: none;
+            border-radius: 8px;
+            background: #087f8c;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background: #056873;
+        }
+
+        #message {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .fields-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .field-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            background: #f9fcfd;
+        }
+
+        .field-card h3 {
+            color: #087f8c;
+            margin-bottom: 15px;
+        }
+
+        .field-card p {
+            margin: 8px 0;
+        }
+
+        .empty {
+            color: #6b7280;
+            padding: 15px 0;
+        }
+
+        @media (max-width: 800px) {
+            .form-grid,
+            .fields-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="topbar">
+        <h1>🌱 My Fields</h1>
+        <a href="dashboard.html" class="back-btn">← Dashboard</a>
+    </div>
+
+    <!-- ADD FIELD -->
+    <div class="card">
+
+        <h2>Add New Field</h2>
+
+        <form id="fieldForm">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="location">📍 Location</label>
+                    <input
+                        type="text"
+                        id="location"
+                        placeholder="Example: Anantapur"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="fieldSize">📐 Field Size (acres)</label>
+                    <input
+                        type="number"
+                        id="fieldSize"
+                        placeholder="Example: 2"
+                        min="0.1"
+                        step="0.1"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="crop">🌱 Crop</label>
+                    <select id="crop" required>
+                        <option value="">Select Crop</option>
+                        <option value="Groundnut">Groundnut</option>
+                        <option value="Cotton">Cotton</option>
+                        <option value="Rice">Rice</option>
+                        <option value="Maize">Maize</option>
+                        <option value="Red Gram">Red Gram</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="soilType">🪨 Soil Type</label>
+                    <select id="soilType" required>
+                        <option value="">Select Soil Type</option>
+                        <option value="Red Soil">Red Soil</option>
+                        <option value="Black Soil">Black Soil</option>
+                        <option value="Sandy Soil">Sandy Soil</option>
+                        <option value="Loamy Soil">Loamy Soil</option>
+                        <option value="Clay Soil">Clay Soil</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="irrigationMethod">🚰 Irrigation Method</label>
+                    <select id="irrigationMethod" required>
+                        <option value="">Select Method</option>
+                        <option value="Drip Irrigation">Drip Irrigation</option>
+                        <option value="Sprinkler Irrigation">Sprinkler Irrigation</option>
+                        <option value="Flood Irrigation">Flood Irrigation</option>
+                        <option value="Furrow Irrigation">Furrow Irrigation</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Add Field
+            </button>
+
+            <div id="message"></div>
+
+        </form>
+
+    </div>
+
+
+    <!-- SAVED FIELDS -->
+
+    <div class="card">
+
+        <h2>My Saved Fields</h2>
+
+        <div id="fieldsContainer" class="fields-grid">
+            <p class="empty">Loading your fields...</p>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const API_URL = "http://localhost:5000/api";
+
+
+// GET LOGGED-IN USER
+
+const user = JSON.parse(localStorage.getItem("user"));
+
+if (!user) {
+    window.location.href = "login.html";
+}
+
+const farmerId = user.id;
+
+console.log("Logged-in farmer:", user);
+console.log("Farmer ID:", farmerId);
+
+
+// ADD FIELD
+
+document.getElementById("fieldForm").addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const location = document.getElementById("location").value;
+    const fieldSize = Number(document.getElementById("fieldSize").value);
+    const crop = document.getElementById("crop").value;
+    const soilType = document.getElementById("soilType").value;
+    const irrigationMethod = document.getElementById("irrigationMethod").value;
+
+    const message = document.getElementById("message");
+
+    try {
+
+        const response = await fetch(`${API_URL}/fields`, {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                farmer: farmerId,
+                location: location,
+                fieldSize: fieldSize,
+                crop: crop,
+                soilType: soilType,
+                irrigationMethod: irrigationMethod
+            })
+
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+
+            message.style.color = "red";
+            message.innerText = data.message || "Failed to add field.";
+
+            return;
+        }
+
+        message.style.color = "green";
+        message.innerText = "✅ Field added successfully!";
+
+        document.getElementById("fieldForm").reset();
+
+        loadFields();
+
+    } catch (error) {
+
+        console.error("Field error:", error);
+
+        message.style.color = "red";
+        message.innerText = "❌ Cannot connect to AquaVision server.";
+    }
+
+});
+
+
+// LOAD SAVED FIELDS
+
+async function loadFields() {
+
+    const container = document.getElementById("fieldsContainer");
+
+    try {
+
+        const response = await fetch(
+            `${API_URL}/fields/${farmerId}`
+        );
+
+        const fields = await response.json();
+
+        if (!response.ok) {
+
+            container.innerHTML =
+                "<p class='empty'>Unable to load fields.</p>";
+
+            return;
+        }
+
+        if (fields.length === 0) {
+
+            container.innerHTML =
+                "<p class='empty'>No fields added yet. Add your first field above.</p>";
+
+            return;
+        }
+
+        container.innerHTML = "";
+
+        fields.forEach(field => {
+
+            const card = document.createElement("div");
+
+            card.className = "field-card";
+
+            card.innerHTML = `
+
+                <h3>🌱 ${field.crop}</h3>
+
+                <p>📍 <strong>Location:</strong> ${field.location}</p>
+
+                <p>📐 <strong>Area:</strong> ${field.fieldSize} acres</p>
+
+                <p>🪨 <strong>Soil:</strong> ${field.soilType}</p>
+
+                <p>🚰 <strong>Irrigation:</strong> ${field.irrigationMethod}</p>
+
+            `;
+
+            container.appendChild(card);
+
+        });
+
+    } catch (error) {
+
+        console.error("Load fields error:", error);
+
+        container.innerHTML =
+            "<p class='empty'>❌ Cannot connect to AquaVision server.</p>";
+    }
+}
+
+
+// LOAD FIELDS WHEN PAGE OPENS
+
+loadFields();
+
+</script>
+
+</body>
+</html>

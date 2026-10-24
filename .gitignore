@@ -1,0 +1,13 @@
+
+# Private credentials
+backend/.env
+.env
+
+# Installed dependencies
+backend/node_modules/
+node_modules/
+
+# Logs and local system files
+*.log
+.DS_Store
+Thumbs.db

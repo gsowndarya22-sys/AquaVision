@@ -1,0 +1,299 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historical Crop Data | AquaVision</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #f4f9f8;
+            color: #17212b;
+        }
+
+        .container {
+            max-width: 1060px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        header h1 {
+            margin: 0 0 18px;
+            font-size: 32px;
+            color: #17212b;
+        }
+
+        header p {
+            color: #59636e;
+            line-height: 1.6;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 24px 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .summary-card p {
+            margin: 0 0 16px;
+            color: #59636e;
+        }
+
+        .summary-card h2 {
+            margin: 0;
+            color: #0860df;
+            font-size: 24px;
+        }
+
+        .info-box {
+            padding: 18px;
+            margin-bottom: 25px;
+            background: #eef7ff;
+            border-left: 5px solid #0860df;
+            border-radius: 8px;
+            line-height: 1.6;
+        }
+
+        .info-box strong {
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .table-container {
+            background: #fff;
+            border-radius: 12px;
+            overflow-x: auto;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        thead {
+            background: #0860df;
+            color: #fff;
+        }
+
+        th {
+            padding: 17px 12px;
+            text-align: center;
+        }
+
+        td {
+            padding: 16px 12px;
+            text-align: center;
+            border-bottom: 1px solid #e8edf2;
+        }
+
+        tbody tr:hover {
+            background: #f4f9ff;
+        }
+
+        .message-cell {
+            padding: 35px 15px;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            color: #68727d;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding: 14px;
+            }
+
+            header h1 {
+                font-size: 26px;
+            }
+
+            .summary {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <header>
+            <h1>🌾 Rayalaseema Crop History</h1>
+            <p>
+                Historical cultivation, production and yield information
+                for crops in the Rayalaseema region.
+            </p>
+        </header>
+
+        <section class="summary">
+            <div class="summary-card">
+                <p>Region</p>
+                <h2>Rayalaseema</h2>
+            </div>
+
+            <div class="summary-card">
+                <p>District</p>
+                <h2>Anantapur</h2>
+            </div>
+
+            <div class="summary-card">
+                <p>Crops Available</p>
+                <h2 id="cropCount">-</h2>
+            </div>
+        </section>
+
+        <section class="info-box">
+            <strong>📊 Data Information</strong>
+            The figures shown below are historical agricultural statistics.
+            Area is expressed in thousand hectares, production in thousand
+            tonnes and yield in kilograms per hectare.
+        </section>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>District</th>
+                        <th>Crop</th>
+                        <th>Area<br>(000 ha)</th>
+                        <th>Production<br>(000 tonnes)</th>
+                        <th>Yield<br>(kg/ha)</th>
+                    </tr>
+                </thead>
+
+                <tbody id="cropTableBody">
+                    <tr>
+                        <td colspan="6" class="message-cell">
+                            Loading historical data...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <footer>
+            © 2026 AquaVision
+        </footer>
+
+    </div>
+
+    <script>
+        async function loadCropHistory() {
+            const tableBody = document.getElementById("cropTableBody");
+            const cropCount = document.getElementById("cropCount");
+
+            try {
+                const response = await fetch(
+                    "http://localhost:5000/api/crop-history",
+                    { cache: "no-store" }
+                );
+
+                if (!response.ok) {
+                    throw new Error(
+                        `API request failed with status ${response.status}`
+                    );
+                }
+
+                const data = await response.json();
+
+                console.log("Crop history received:", data);
+
+                if (!Array.isArray(data)) {
+                    throw new Error("The API response is not a list of crop records.");
+                }
+
+                // Count distinct crop names, rather than total records.
+                const distinctCrops = new Set(
+                    data.map(record => record.crop).filter(Boolean)
+                );
+
+                cropCount.textContent = distinctCrops.size;
+
+                if (data.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="6" class="message-cell">
+                                No historical crop data available.
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                // Show the newest years first.
+                data.sort((a, b) =>
+                    String(b.year).localeCompare(String(a.year))
+                );
+
+                tableBody.innerHTML = "";
+
+                data.forEach(record => {
+                    const row = document.createElement("tr");
+
+                    const values = [
+                        record.year,
+                        record.district,
+                        record.crop,
+                        record.cultivationArea,
+                        record.production,
+                        record.yieldPerHectare
+                    ];
+
+                    values.forEach(value => {
+                        const cell = document.createElement("td");
+                        cell.textContent = value ?? "-";
+                        row.appendChild(cell);
+                    });
+
+                    tableBody.appendChild(row);
+                });
+
+            } catch (error) {
+                console.error("Error loading crop history:", error);
+
+                cropCount.textContent = "-";
+
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="message-cell">
+                            Unable to load historical data.
+                            Please check that the AquaVision backend is running.
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        loadCropHistory();
+    </script>
+</body>
+</html>

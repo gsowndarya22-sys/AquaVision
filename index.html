@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AquaVision | Smart Irrigation</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* ================= AUTH SECTION ================= */
+
+        .auth-section {
+            padding: 70px 20px;
+            background: #f8fbfc;
+        }
+
+        .auth-container {
+            max-width: 950px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .auth-card {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
+            border: 1px solid #e5e7eb;
+        }
+
+        .auth-card h2 {
+            margin-bottom: 8px;
+            color: #0f172a;
+        }
+
+        .auth-card p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 22px;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        .auth-form label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .auth-form input,
+        .auth-form select {
+            width: 100%;
+            padding: 12px 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .auth-form input:focus,
+        .auth-form select:focus {
+            border-color: #0ea5e9;
+        }
+
+        .auth-btn {
+            border: none;
+            padding: 13px;
+            border-radius: 9px;
+            background: #087f8c;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .auth-btn:hover {
+            background: #066a75;
+        }
+
+        .auth-message {
+            margin-top: 15px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .dashboard-btn {
+            display: none;
+            margin-top: 15px;
+            text-align: center;
+            padding: 12px;
+            border-radius: 9px;
+            background: #0f766e;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 750px) {
+
+            .auth-container {
+                grid-template-columns: 1fr;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <div class="logo">
+                💧 AquaVision
+            </div>
+
+            <div class="nav-links">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="irrigation.html">
+                    Smart Irrigation
+                </a>
+
+                <a href="weather.html">
+                    Weather
+                </a>
+
+                <a href="about.html">
+                    About
+                </a>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <!-- ================= HERO ================= -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <span class="badge">
+                    Designed for Rayalaseema
+                </span>
+
+                <h1>
+                    Smart Irrigation for a
+                    <span>Water-Smart Future</span>
+                </h1>
+
+                <p>
+                    AquaVision helps farmers make better irrigation
+                    decisions using field conditions and weather information.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a href="irrigation.html" class="primary-btn">
+                        Check Irrigation
+                    </a>
+
+                    <a href="weather.html" class="secondary-btn">
+                        View Weather
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="hero-visual">
+
+                💧
+
+                <div>
+                    🌱
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= FEATURES ================= -->
+
+        <section class="section">
+
+            <div class="section-heading">
+
+                <p class="small-title">
+                    OUR FEATURES
+                </p>
+
+                <h2>
+                    Smarter Decisions for Better Water Management
+                </h2>
+
+                <p>
+                    AquaVision combines weather information and field
+                    conditions to support efficient irrigation decisions.
+                </p>
+
+            </div>
+
+
+            <div class="feature-grid">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        🌦️
+                    </div>
+
+                    <h3>
+                        Weather Intelligence
+                    </h3>
+
+                    <p>
+                        View temperature, humidity, rainfall and wind
+                        conditions for selected Rayalaseema locations.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        💧
+                    </div>
+
+                    <h3>
+                        Smart Irrigation
+                    </h3>
+
+                    <p>
+                        Get an irrigation recommendation based on crop,
+                        field area and soil moisture.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        🌱
+                    </div>
+
+                    <h3>
+                        Water-Smart Farming
+                    </h3>
+
+                    <p>
+                        Reduce unnecessary irrigation and encourage more
+                        efficient use of available water.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= HOW IT WORKS ================= -->
+
+        <section class="section light-section">
+
+            <div class="section-heading">
+
+                <p class="small-title">
+                    HOW IT WORKS
+                </p>
+
+                <h2>
+                    Four Simple Steps
+                </h2>
+
+            </div>
+
+
+            <div class="steps-grid">
+
+                <div class="step-card">
+
+                    <span>01</span>
+
+                    <h3>
+                        Select Location
+                    </h3>
+
+                    <p>
+                        Choose a location in the Rayalaseema region.
+                    </p>
+
+                </div>
+
+
+                <div class="step-card">
+
+                    <span>02</span>
+
+                    <h3>
+                        Check Weather
+                    </h3>
+
+                    <p>
+                        View local weather conditions and rainfall information.
+                    </p>
+
+                </div>
+
+
+                <div class="step-card">
+
+                    <span>03</span>
+
+                    <h3>
+                        Enter Field Data
+                    </h3>
+
+                    <p>
+                        Enter crop, field area and soil moisture.
+                    </p>
+
+                </div>
+
+
+                <div class="step-card">
+
+                    <span>04</span>
+
+                    <h3>
+                        Get Recommendation
+                    </h3>
+
+                    <p>
+                        Receive a simple irrigation decision and water estimate.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= LOGIN / REGISTER ================= -->
+
+        <section class="auth-section">
+
+            <div class="section-heading">
+
+                <p class="small-title">
+                    FARMER ACCOUNT
+                </p>
+
+                <h2>
+                    Access Your AquaVision Dashboard
+                </h2>
+
+                <p>
+                    Create your farmer account or login to view your
+                    field and irrigation information.
+                </p>
+
+            </div>
+
+
+            <div class="auth-container">
+
+
+                <!-- ================= LOGIN ================= -->
+
+                <div class="auth-card">
+
+                    <h2>
+                        Farmer Login
+                    </h2>
+
+                    <p>
+                        Login to access your personal dashboard.
+                    </p>
+
+
+                    <form id="loginForm" class="auth-form">
+
+                        <label>
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="loginEmail"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+
+                        <label>
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="loginPassword"
+                            placeholder="Enter your password"
+                            required
+                        >
+
+
+                        <button
+                            type="submit"
+                            class="auth-btn"
+                        >
+                            Login
+                        </button>
+
+                    </form>
+
+
+                    <div
+                        id="loginMessage"
+                        class="auth-message"
+                    ></div>
+
+                </div>
+
+
+                <!-- ================= REGISTER ================= -->
+
+                <div class="auth-card">
+
+                    <h2>
+                        Create Farmer Account
+                    </h2>
+
+                    <p>
+                        Register your account to start using AquaVision.
+                    </p>
+
+
+                    <form id="registerForm" class="auth-form">
+
+                        <label>
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="registerName"
+                            placeholder="Enter your name"
+                            required
+                        >
+
+
+                        <label>
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="registerEmail"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+
+                        <label>
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="registerPassword"
+                            placeholder="Create a password"
+                            required
+                        >
+
+
+                        <label>
+                            Location
+                        </label>
+
+                        <select
+                            id="registerLocation"
+                            required
+                        >
+
+                            <option value="">
+                                Select location
+                            </option>
+
+                            <option value="Anantapur">
+                                Anantapur
+                            </option>
+
+                            <option value="Kurnool">
+                                Kurnool
+                            </option>
+
+                            <option value="Kadapa">
+                                Kadapa
+                            </option>
+
+                            <option value="Chittoor">
+                                Chittoor
+                            </option>
+
+                            <option value="Rayalaseema">
+                                Other Rayalaseema Location
+                            </option>
+
+                        </select>
+
+
+                        <button
+                            type="submit"
+                            class="auth-btn"
+                        >
+                            Create Account
+                        </button>
+
+                    </form>
+
+
+                    <div
+                        id="registerMessage"
+                        class="auth-message"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <h3>
+            💧 AquaVision
+        </h3>
+
+        <p>
+            Weather-Based Smart Irrigation Management System for Rayalaseema
+        </p>
+
+        <p class="copyright">
+            © 2026 AquaVision | CSP Project
+        </p>
+
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        const API_URL = "http://localhost:5000/api";
+
+
+        /* ==========================================
+           LOGIN
+        ========================================== */
+
+        document
+            .getElementById("loginForm")
+            .addEventListener("submit", async function (event) {
+
+                event.preventDefault();
+
+
+                const email =
+                    document.getElementById("loginEmail").value;
+
+                const password =
+                    document.getElementById("loginPassword").value;
+
+                const message =
+                    document.getElementById("loginMessage");
+
+
+                message.textContent = "Logging in...";
+
+
+                try {
+
+                    const response = await fetch(
+                        `${API_URL}/auth/login`,
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+
+                            body: JSON.stringify({
+                                email: email,
+                                password: password
+                            })
+                        }
+                    );
+
+
+                    const data = await response.json();
+
+
+                    if (!response.ok) {
+
+                        message.textContent =
+                            data.message || "Login failed.";
+
+                        return;
+                    }
+
+
+                    /* ==================================
+                       SAVE LOGIN INFORMATION
+                    ================================== */
+
+                    localStorage.setItem(
+                        "token",
+                        data.token
+                    );
+
+
+                    localStorage.setItem(
+                        "user",
+                        JSON.stringify(data.user)
+                    );
+
+
+                    message.textContent =
+                        "Login successful! Opening dashboard...";
+
+
+                    /*
+                        Wait a moment so the user can
+                        see the success message.
+                    */
+
+                    setTimeout(function () {
+
+                        window.location.href =
+                            "dashboard.html";
+
+                    }, 700);
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Login error:",
+                        error
+                    );
+
+                    message.textContent =
+                        "Cannot connect to AquaVision server.";
+
+                }
+
+            });
+
+
+        /* ==========================================
+           REGISTER
+        ========================================== */
+
+        document
+            .getElementById("registerForm")
+            .addEventListener("submit", async function (event) {
+
+                event.preventDefault();
+
+
+                const name =
+                    document.getElementById("registerName").value;
+
+                const email =
+                    document.getElementById("registerEmail").value;
+
+                const password =
+                    document.getElementById("registerPassword").value;
+
+                const location =
+                    document.getElementById("registerLocation").value;
+
+                const message =
+                    document.getElementById("registerMessage");
+
+
+                message.textContent =
+                    "Creating your account...";
+
+
+                try {
+
+                    const response = await fetch(
+                        `${API_URL}/auth/register`,
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+
+                            body: JSON.stringify({
+                                name: name,
+                                email: email,
+                                password: password,
+                                location: location
+                            })
+                        }
+                    );
+
+
+                    const data = await response.json();
+
+
+                    if (!response.ok) {
+
+                        message.textContent =
+                            data.message || "Registration failed.";
+
+                        return;
+                    }
+
+
+                    message.textContent =
+                        "Account created successfully! You can now login.";
+
+                    document
+                        .getElementById("registerForm")
+                        .reset();
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Registration error:",
+                        error
+                    );
+
+                    message.textContent =
+                        "Cannot connect to AquaVision server.";
+
+                }
+
+            });
+
+    </script>
+
+</body>
+
+</html>
