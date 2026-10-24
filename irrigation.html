@@ -705,7 +705,7 @@ async function loadFields() {
     try {
 
         const response = await fetch(
-            `http://localhost:5000/api/fields/${farmerId}`
+            `https://aquavision-backend-jzld.onrender.com/api/fields/${farmerId}`
         );
 
         const fields = await response.json();
@@ -1122,7 +1122,7 @@ calculateButton.addEventListener(
 
             const response =
                 await fetch(
-                    "http://localhost:5000/api/irrigation",
+                   "https://aquavision-backend-jzld.onrender.com/api/irrigation",
                     {
                         method: "POST",
 
